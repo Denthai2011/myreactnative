@@ -7,10 +7,12 @@ export default function Resort() {
     return (
          <ScrollView>
              <View style={{flex:1,flexDirection:"column"}}>
+                {/* Section 1  */}
                 <View style={{flexDirection:"row"}}>
                     <Image style={{flex:1,padding:10,resizeMode:"cover", aspectRatio:5/2}} 
                     source= {require("../../assets/week3/room-6.jpg")}/>
                 </View>
+                {/* Section 2  */}
                 <View style={{flexDirection:"column",alignItems:"center",backgroundColor:"#fff6dd",padding:20,marginTop:-20,margin:10,borderRadius:10}}>
                     
                     <Text style={{fontSize:20}}>Hilton San Fransico</Text>
@@ -24,6 +26,7 @@ export default function Resort() {
                     <Text style={{fontSize:10}}>Facilities provide may range from a modest quality mattressin 
                     a small room to large suiles</Text>              
                 </View>
+                {/* Section 3  */}
                 <View style={{flex:1,flexDirection:"row"}}>
                     <View style={{width:50,height:50,borderRadius:50,backgroundColor:"orange",justifyContent:"center",alignItems:"center",margin:5}}>
                         <Text>9.5</Text>
@@ -37,6 +40,7 @@ export default function Resort() {
                         </Text>
                     </View>
                 </View>
+                
                 <View style={{borderWidth:0.5,margin:15,padding:5}}>
                     <Text>
                         Hotel Description
