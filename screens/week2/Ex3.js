@@ -12,6 +12,8 @@ export default function Ex3() {
       <View style={{width: 50, height: 50, backgroundColor: '#4A90E2'}} />
         <View style={{width: 50, height: 50, backgroundColor: '#9013FE'}} />
         
-    </View><Button title="Next" onPress={() => navigation.navigate("Ex4")} /></View>
+    </View>
+      <Button title="Next" onPress={() => navigation.navigate("Ex4")} />
+    </View>
   );
 }

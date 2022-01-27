@@ -8,9 +8,9 @@ export default function Travel() {
     return (        
         <View style={{ flex: 1, paddingTop: 50}}>
             {/* <Text> Week 3 </Text> */}
-            {/* <Signup /> */}
-            {/* <Card/> */}
-            <Resort/>
+            <Signup />
+            <Card/>
+            {/* <Resort/> */}
         </View>
     );
 }
