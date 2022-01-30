@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, FlatList, Text, TouchableOpacity, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import BookLaravel from "../../services/BookLaravel";
+
+
 
 export default function Book() {
-    
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -30,27 +32,32 @@ export default function Book() {
     },
   ]);
   const navigation = useNavigation();
-  const readProducts = async () => {
-    try {
-      setRefresh(true);
-      const string_value = await AsyncStorage.getItem("@products");
-      let products = string_value != null ? JSON.parse(string_value) : [];
-      setProducts(products);
-      setRefresh(false);
-    } catch (e) {
-      // error reading value
-    }
+  const loadBooks = async () => {
+    setRefresh(true);
+    let products = await BookLaravel.getItems();
+    setProducts(products);
+    setRefresh(false);
   };
-  useEffect(() => { readProducts(); }, []);
-  const [refresh, setRefresh] = useState(false)
+
+  useEffect(() => {
+    // WHEN MOUNT AND UPDATE
+    const unsubscribe = navigation.addListener("focus", () => {
+      loadBooks();
+    });
+    // WHEN UNMOUNT
+    return unsubscribe;
+  }, [navigation]);
+
+  const [refresh, setRefresh] = useState(false);
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         data={products}
-        numColumns={1}
-        keyExtractor={(item) => item.id.toString()}
         refreshing={refresh}
-        onRefresh={() => { readProducts(); }}
+        onRefresh={() => { loadBooks(); }}
+        numColumns={2}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => {
           return (
             <TouchableOpacity
@@ -66,10 +73,19 @@ export default function Book() {
                 elevation: 5,
               }}
             >
-              <View style={{ flexDirection: "row" }}>
+              <View
+                style={{
+                  borderRadius: 10,
+                  backgroundColor: "white",
+                  margin: 5,
+                  padding: 10,
+                  flex: 1,
+                  elevation: 5,
+                }}
+              >
                 <Image
                   style={{ flex: 1, resizeMode: "contain", aspectRatio: 1 / 1 }}
-                  source={{ uri: item.Image }}
+                  source={{ uri: item.image }}
                 />
               </View>
               <Text style={{ fontSize: 20, height: 70, marginVertical: 10 }}>
